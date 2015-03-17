@@ -1,0 +1,7 @@
+<ul>
+<% meetups.each do |post| %>
+  <li><a href= '#{<%= post.name %>}' ><%= post.name %></a></li>
+  <li><%= post.description %></li>
+  <li><%= post.location %></li>
+  <% end %>
+</ul>
