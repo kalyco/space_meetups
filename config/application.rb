@@ -15,7 +15,7 @@ configure do
   set :views, 'app/views'
 
   use OmniAuth::Builder do
-    provider :github, ENV['b757c0c041e3b0ec8166'], ENV['058fc35ffb5e2701b2f7f26490cfa13106e198e5'],
+    provider :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'],
       scope: 'user:email'
   end
 end

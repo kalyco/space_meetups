@@ -29,31 +29,6 @@ def authenticate!
   end
 end
 
-get '/' do
-  redirect '/meetups'
-end
-
-get '/meetups' do
-  meetups = Meetup.all.order(:name)
-  erb :index, locals: {meetups: meetups, confirmation: params[:confirmation]}
-end
-
-get '/meetups/new' do
-  meetup = Meetup.create(name: params["name"],description: params["description"], location: params["location"])
-  erb :new, locals: {meetup: meetup}
-end
-
-post '/meetups/new' do
-  confirmation = ''
-  meetup = Meetup.create(name: params["name"],description: params["description"], location: params["location"])
-  if @meetup.save
-    confirmation = "You have added an event"
-    redirect '/meetups'
-  else
-    erb :new, locals: {meetup: meetup}
-  end
-end
-
 get '/auth/github/callback' do
   auth = env['omniauth.auth']
 
@@ -73,4 +48,34 @@ end
 
 get '/example_protected_page' do
   authenticate!
+end
+############################
+#######  MY ROUTES  ########
+############################
+
+get '/' do
+  redirect '/meetups'
+end
+
+get '/meetups' do
+  meetups = Meetup.all.order(:name)
+  erb :index, locals: {meetups: meetups, confirmation: params[:confirmation]}
+end
+
+get '/meetups/new' do
+  if signed_in?
+  meetup = Meetup.create(name: params["name"],description: params["description"], location: params["location"])
+  erb :new, locals: {meetup: meetup}
+  else redirect '/example_protected_page'
+  end
+end
+
+post '/meetups/new' do
+  meetup = Meetup.create(name: params["name"],description: params["description"], location: params["location"])
+  if @meetup.save
+    flash[:notice] = "You have added an event"
+    redirect '/meetups'
+  else
+    erb :new, locals: {meetup: meetup}
+  end
 end
