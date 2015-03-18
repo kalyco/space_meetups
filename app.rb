@@ -38,12 +38,12 @@ get '/meetups' do
   erb :index, locals: {meetups: meetups, confirmation: params[:confirmation]}
 end
 
-get '/new' do
+get '/meetups/new' do
   meetup = Meetup.create(name: params["name"],description: params["description"], location: params["location"])
   erb :new, locals: {meetup: meetup}
 end
 
-post '/new' do
+post '/meetups/new' do
   confirmation = ''
   meetup = Meetup.create(name: params["name"],description: params["description"], location: params["location"])
   if @meetup.save
@@ -53,7 +53,6 @@ post '/new' do
     erb :new, locals: {meetup: meetup}
   end
 end
-
 
 get '/auth/github/callback' do
   auth = env['omniauth.auth']

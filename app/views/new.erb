@@ -1,7 +1,7 @@
 <h1>Add Meetup</h1>
 
 
-<form action="/new" method="post">
+<form action="/meetups" method="post">
   <div>
     <label for="name">Name:</label>
     <input type="text" id="name" name="meetup[name]" value="<%= meetup.name %>">
@@ -19,5 +19,4 @@
   <input type="submit" value="Add Meetup">
 </form>
 
-
-<a href="/">Back to all meetups</a>
+<a href="/meetups">Back to all meetups</a>

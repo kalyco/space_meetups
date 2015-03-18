@@ -24,27 +24,20 @@ feature "User can submit a meetup" do
 # * I must supply a name.
 
 scenario "user validates info" do
-  visit '/new'
+  visit '/meetups/new'
     fill_in "name", with: "PIZZA PARTY"
     fill_in "location", with: "my place"
     fill_in "description", with: "BYOP"
     click_button "Add Meetup"
-  visit '/'
+  visit '/meetups'
     expect(page).to have_content "PIZZA PARTY"
     expect(page).to have_content "my place"
     expect(page).to have_content "BYOP"
   end
-  # scenario "user validates info" do
-  #   visit '/new'
-  #     fill_in "name", with: "PIZZA PARTY"
-  #     fill_in "location", with: "my place"
-  #     click_button "Add Meetup"
-  #     expect(page).to have_content()
-  # end
 
 # * I must supply a location.
   pending "meetups are links" do
-    visit '/'
+    visit '/meetups'
     expect(page).to have_content "link access"
   end
 end
