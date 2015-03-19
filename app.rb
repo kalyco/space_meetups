@@ -59,23 +59,46 @@ end
 
 get '/meetups' do
   meetups = Meetup.all.order(:name)
-  erb :index, locals: {meetups: meetups, confirmation: params[:confirmation]}
+  erb :index, locals: {meetups: meetups}
 end
 
 get '/meetups/new' do
   if signed_in?
-  meetup = Meetup.create(name: params["name"],description: params["description"], location: params["location"])
-  erb :new, locals: {meetup: meetup}
+    meetup = Meetup.new
+  erb :new, locals: { meetup: meetup }
   else redirect '/example_protected_page'
   end
 end
 
+get '/meetups/:id' do
+  user = current_user
+  meetup = Meetup.find(params[:id])
+  member = Membership.new(params[:meetup])
+  erb :show, locals: { member: member, meetup: meetup, user: user }
+end
+
 post '/meetups/new' do
-  meetup = Meetup.create(name: params["name"],description: params["description"], location: params["location"])
-  if @meetup.save
+  meetup = Meetup.new(params[:meetup])
+  if meetup.save
     flash[:notice] = "You have added an event"
-    redirect '/meetups'
+    redirect "/meetups/#{meetup.id}"
   else
     erb :new, locals: {meetup: meetup}
+    flash[:notice] = "Event not added"
+    redirect "/"
+  end
+end
+
+post '/meetups/:id' do
+  user = current_user
+  meetup = Meetup.find(params[:id])
+  member = Membership.new(meetup_id: meetup.id, user_id: user.id)
+  erb :show, locals: { meetup: meetup, member: member, user: user }
+  if member.save
+    flash[:notice] = "You have joined an event"
+    redirect "/meetups/#{meetup.id}"
+  else
+    flash[:notice] = "You are already a member"
+    redirect "/"
   end
 end

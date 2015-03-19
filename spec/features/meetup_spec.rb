@@ -8,8 +8,7 @@ feature "User sees meetup details" do
       description: "A convention on security",
       location: "Boston"
       })
-    visit '/'
-
+    visit "/meetups/#{boston_sec.id}"
     expect(page).to have_content "#{boston_sec.name}"
   end
 # * I should see a description of the meetup.
@@ -19,7 +18,7 @@ feature "User sees meetup details" do
       description: "A convention on security",
       location: "Boston"
       })
-    visit '/'
+    visit "/meetups/#{boston_sec.id}"
     expect(page).to have_content "#{boston_sec.description}"
   end
 # * I should see where the meetup is located.
@@ -29,7 +28,7 @@ feature "User sees meetup details" do
       description: "A convention on security",
       location: "Boston"
       })
-    visit '/'
+    visit "/meetups/#{boston_sec.id}"
     expect(page).to have_content "#{boston_sec.location}"
   end
 end

@@ -1,4 +1,6 @@
 class Membership < ActiveRecord::Base
-  belongs_to :users
-  belongs_to :meetups
+  belongs_to :user
+  belongs_to :meetup
+
+  validates :user_id, uniqueness: true
 end

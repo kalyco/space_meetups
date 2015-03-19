@@ -1,3 +1,6 @@
+form {
+  color: #000000;
+}
 
 body {
   background-image: url('/images/stardust.png');
@@ -37,8 +40,4 @@ a:visited {
 .flash {
   padding: 1em;
   background-color: #3B9089;
-}
-
-.textbox {
-  font color: #000000;
 }

@@ -1,0 +1,16 @@
+<ul>
+  <li>Name: <%= meetup.name %></li>
+  <li>Description: <%= meetup.description %></li>
+  <li>Location: <%= meetup.location %></li>
+</ul>
+<form action="/meetups/<%="#{meetup.id}"%>" method="post">
+  <input type="submit" value="Join a Meetup"
+  input type="hidden" name="join"
+  value="<% member %>">
+</form>
+
+<% meetup.errors.full_messages.each do |error| %>
+  <li>
+    <%= error %>
+  </li>
+<% end %>

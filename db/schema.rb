@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317172542) do
+ActiveRecord::Schema.define(version: 20150318203406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,13 @@ ActiveRecord::Schema.define(version: 20150317172542) do
     t.string "location",    null: false
   end
 
+  create_table "memberships", force: :cascade do |t|
+    t.integer "meetup_id", null: false
+    t.integer "user_id",   null: false
+  end
+
+  add_index "memberships", ["user_id", "meetup_id"], name: "index_memberships_on_user_id_and_meetup_id", unique: true, using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "provider",   null: false
     t.string   "uid",        null: false
@@ -30,7 +37,6 @@ ActiveRecord::Schema.define(version: 20150317172542) do
     t.string   "avatar_url", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "meetup_id"
   end
 
   add_index "users", ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree

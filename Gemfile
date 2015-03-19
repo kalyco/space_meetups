@@ -13,4 +13,5 @@ group :test, :development do
   gem 'dotenv'
   gem 'pry'
   gem 'rspec'
+  gem 'database_cleaner'
 end
